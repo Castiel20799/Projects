@@ -17,7 +17,7 @@ Route::delete('/logout',[LoginController::class,'destroy'] );
 
 
 //Page
-Route::get('/',[PageController::class,'index'] );
+Route::view('/','index');
 
 
 //Posts
