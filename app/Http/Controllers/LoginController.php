@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
@@ -31,7 +32,9 @@ class LoginController extends Controller
     
         if(! $user)
         {
-            return redirect('login');
+            throw ValidationException::withMessages([
+                'email' => 'This email is not register',
+            ]);
         }
         
         $credential = [
@@ -40,20 +43,22 @@ class LoginController extends Controller
         ];
 
         if(! Auth::attempt($credential)){
-            return redirect('login');
+            throw ValidationException::withMessages([
+                'password' => 'Password is wrong',
+            ]);
         }
 
-        return redirect('/');
+        return redirect('');
 
         //email + password -> verify
-        //user ingo -> session
+        //user info -> session
     }
 
     public function destroy()
     {
         Auth::logout();
 
-        return redirect('/');
+        return redirect('/posts');
     }
 }
 

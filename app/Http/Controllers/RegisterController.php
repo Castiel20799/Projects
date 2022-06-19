@@ -34,6 +34,6 @@ class RegisterController extends Controller
         $user->password = bcrypt($request->password);
         $user->save();
 
-        return redirect('/');
+        return redirect('/posts');
     }
 }
