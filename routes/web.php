@@ -7,6 +7,18 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\RegisterController;
 
+// Route::get('generate->post', function(){
+//     for(i=0;i<10;i++)
+//     {
+//         \App\Models\Post::create([
+//             'title' => 'My title',
+//             'body' => 'My Body'
+//         ]);
+
+//     }
+       
+// });
+
 //User
 Route::get('/register',[RegisterController::class,'create'] );
 Route::post('/register',[RegisterController::class,'store'] );
