@@ -5,13 +5,20 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::all();
+           // $posts = Post::paginate(5);
+        // $posts = Post::all();
+        $posts = Post::select('posts.*', 'users.name',)
+        ->join('users', 'posts.user_id', '=', 'users.id')
+        ->paginate(3);
+        
+     
         
         return view('posts.index', compact('posts'));
     }
@@ -100,6 +107,10 @@ class PostController extends Controller
     public function show($id)
     {
         $post = Post::find($id);
+        $post = Post::where('posts.id', '=', $id)
+                ->join('users', 'posts.user_id', '=', 'users.id')
+                ->select('posts.*', 'users.name',)
+                ->first();
 
         return view('posts.show',compact('post'));
     }

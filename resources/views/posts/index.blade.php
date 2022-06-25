@@ -37,10 +37,21 @@ Post
       @endauth
     </div>
     <p>{{$post->body}}</p>
-    <p class="text-muted">{{$post->updated_at->diffForHumans()}} by Hades</p>
+    <i><p class="text-muted">{{$post->updated_at->diffForHumans()}}</i>by<b> 
+    @php
+    $userId = $post->user_id;
+    $user = \App\Models\User::find($userId);
+    echo $user ->name;
+        
+    @endphp  
+    
+    </b> </p>
     <hr>
     @endforeach
+    {{$posts->links()}}
+ 
   </div>
+ 
 
 </div>
 

@@ -13,7 +13,9 @@
 
     <div>
         <h5>{{$post->title}}</h5><br>
+        <p class="text-muted"><i>{{$post->updated_at->diffForHumans()}}</i> by <b> {{$post->name}}</b></p><br>
         <p>{{$post->body}}</p>
+      
     </div>
 
 </div>
