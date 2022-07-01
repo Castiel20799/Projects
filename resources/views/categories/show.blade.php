@@ -13,7 +13,7 @@
 
     <div>
         <h5>{{$category->name}}</h5><br>
-        <p>{{$category->description}}</p>
+        {{-- <p>{{$category->description}}</p> --}}
     </div>
 
 </div>

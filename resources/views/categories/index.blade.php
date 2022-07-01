@@ -16,9 +16,9 @@
     <div class="container bg-grey rounded p-5">
     @foreach($categories as $category)
     <div class="d-flex">
-      <h5><a href="/categories/show/{{$category->id}}">{{ $category->name }}</a></h5>
+      <h5>{{ $category->name }}</h5>
 
-      <a href="/categories/edit/{{ $category->id }}" class="btn btn-sm btn-secondary ms-2">Edit</a>
+      <a href="/categories/edit/{{ $category->id }}" class="btn btn-sm btn-success ms-2">Edit</a>
       <form action="/categories/delete/{{$category->id}}" method="POST" onclick="return confirm('Deleting this post! Are you sure?')">
         @method('DELETE')
         @csrf

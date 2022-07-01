@@ -44,7 +44,8 @@ Post
     echo $user ->name;
         
     @endphp  
-    
+
+    <p>{{$post->category}}</p>
     </b> </p>
     <hr>
     @endforeach

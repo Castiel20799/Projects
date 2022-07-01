@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
@@ -14,9 +15,16 @@ class PostController extends Controller
     {
            // $posts = Post::paginate(5);
         // $posts = Post::all();
-        $posts = Post::select('posts.*', 'users.name',)
-        ->join('users', 'posts.user_id', '=', 'users.id')
-        ->paginate(3);
+        // $posts = Post::select('posts.*', 'users.name as author',)
+        // ->join('users', 'posts.user_id', '=', 'users.id')
+        // ->paginate(3);
+
+        // $posts = DB::table('posts')->join('users','users.id', '=', 'posts.users_id')->first();
+        $posts = Post::select('posts.*', 'categories.name as category',)
+            ->join('category_post', 'posts.id', '=', 'category_post.post_id')
+            ->join('categories', 'category_post.category_id', '=', 'categories.id')
+            
+            ->paginate(5);
         
      
         
@@ -25,7 +33,8 @@ class PostController extends Controller
 
     public function create()
     {
-        return view('posts.create');
+        $categories = Category::all();
+        return view('posts.create',compact('categories'));
     }
 
     public function store(Request $request)
@@ -41,20 +50,27 @@ class PostController extends Controller
             ->withInput();
         }
         
-        // $post = new Post();
+        $post = new Post();
 
-        // $post->title = $request->title;
-        // $post->body = $request->body;
-        // $post->created_at = now();
-        // $post->updated_at = now();
-        // $post->save();
+        $post->title = $request->title;
+        $post->body = $request->body;
+        $post->user_id = auth()->user()->id;
+        $post->created_at = now();
+        $post->updated_at = now();
+        $post->save();
+            DB::insert('insert into category_post (post_id,category_id) values (?, ?)', [$post->id,$request->category]);
+           
 
-        Post::create([
-            'title' => $request->title,
-            'body' => $request->body,
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+
+       
+
+        // Post::create([
+        //     'title' => $request->title,
+        //     'body' => $request->body,
+        //     'user_id'=> auth()->user()->id,
+        //     'created_at' => now(),
+        //     'updated_at' => now(),
+        // ]);
 
         session()->flash('success','A post was created succcessfully.');
 
