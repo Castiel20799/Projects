@@ -29,7 +29,7 @@
     </div>
     <div class="mb-3">
       <label for="category" class="form-label">Category</label>
-                  <select class="form-select select optional" multiple name="category[]">
+                  <select class="form-select select optional" multiple name="categories[]" multiple>
                     <option value="" selected disabled>Choose Option</option>
                     @foreach($categories as $category)
                     <option value="{{$category->id}}" >{{$category->name}}</option>

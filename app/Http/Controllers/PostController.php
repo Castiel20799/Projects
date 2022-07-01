@@ -39,6 +39,7 @@ class PostController extends Controller
 
     public function store(Request $request)
     {
+
         $validator = Validator::make($request->all(),[
             'title' => 'required',
             'body' => 'required'
@@ -58,7 +59,12 @@ class PostController extends Controller
         $post->created_at = now();
         $post->updated_at = now();
         $post->save();
-            DB::insert('insert into category_post (post_id,category_id) values (?, ?)', [$post->id,$request->category]);
+
+        foreach($request->categories as $category)
+        {
+            DB::insert('insert into category_post (post_id,category_id) values (?, ?)', [$post->id,$category]);
+        }
+            
            
 
 
